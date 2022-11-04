@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.text.Text?>
+<VBox alignment="CENTER" prefHeight="656.0" prefWidth="1023.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectoud2gaelismaelmain.controler.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <HBox prefHeight="28.0" prefWidth="403.0" spacing="10">
+        <children>
+
+            <Label fx:id="welcomeText" prefHeight="17.0" prefWidth="100.0" text="Introduzca El Año"/>
+            <ComboBox fx:id="anos" prefWidth="150.0"/>
+            <Button onAction="#mostrarTabla" text="Buscar"/>
+        </children>
+    </HBox>
+    <TableView fx:id="tabla" prefHeight="500" prefWidth="1000">
+        <columns>
+            <TableColumn fx:id="posicion" prefWidth="150" text="Posición">
+                <cellValueFactory>
+                    <PropertyValueFactory property="position"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="conductor" prefWidth="364" text="Conductor">
+                <cellValueFactory>
+                    <PropertyValueFactory property="driver"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="equipo" prefWidth="225" text="Equipo">
+                <cellValueFactory>
+                    <PropertyValueFactory property="constructors"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="puntos" prefWidth="150" text="Puntos">
+                <cellValueFactory>
+                    <PropertyValueFactory property="points"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="victorias" prefWidth="150" text="Victorias">
+                <cellValueFactory>
+                    <PropertyValueFactory property="wins"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+    <HBox prefHeight="100.0" prefWidth="200.0" spacing="10">
+        <Label prefHeight="17.0" prefWidth="300.0" text="Introduzca el nombre del fichero al que exportar: "/>
+        <TextField fx:id="nombreFichero" text="standings"/>
+        <Button fx:id="json" onAction="#exportarJSON" text="Json"/>
+        <Button fx:id="xml" onAction="#exportarXML" text="XML"/>
+        <Button fx:id="texto" onAction="#exportarTexto" text="Texto"/>
+        <Button fx:id="binario" onAction="#exportarBinario" text="Binario"/>
+    </HBox>
+
+</VBox>
