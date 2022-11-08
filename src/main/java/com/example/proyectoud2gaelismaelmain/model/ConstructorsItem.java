@@ -13,7 +13,7 @@ public class ConstructorsItem implements Serializable {
 	private String name;
 
 	@JsonProperty("constructorId")
-	private String constructorId;
+	private int constructorId;
 
 	@JsonProperty("url")
 	private String url;
@@ -26,12 +26,19 @@ public class ConstructorsItem implements Serializable {
 		return name;
 	}
 
-	public String getConstructorId(){
+	public int getConstructorId(){
 		return constructorId;
 	}
 
 	public String getUrl(){
 		return url;
+	}
+
+	public ConstructorsItem(String nationality, String name, int constructorId, String url) {
+		this.nationality = nationality;
+		this.name = name;
+		this.constructorId = constructorId;
+		this.url = url;
 	}
 
 	@Override
