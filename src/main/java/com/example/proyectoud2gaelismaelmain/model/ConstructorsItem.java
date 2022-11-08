@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+//Implementamos Serializable para exportar el archivo bin
 public class ConstructorsItem implements Serializable {
 
 	@JsonProperty("nationality")
@@ -13,7 +14,7 @@ public class ConstructorsItem implements Serializable {
 	private String name;
 
 	@JsonProperty("constructorId")
-	private String constructorId;
+	private int constructorId;
 
 	@JsonProperty("url")
 	private String url;
@@ -26,7 +27,7 @@ public class ConstructorsItem implements Serializable {
 		return name;
 	}
 
-	public String getConstructorId(){
+	public int getConstructorId(){
 		return constructorId;
 	}
 
@@ -34,6 +35,14 @@ public class ConstructorsItem implements Serializable {
 		return url;
 	}
 
+	public ConstructorsItem(String nationality, String name, int constructorId, String url) {
+		this.nationality = nationality;
+		this.name = name;
+		this.constructorId = constructorId;
+		this.url = url;
+	}
+
+	//toString que utilizamos para exportar el fichero txt
 	@Override
 	public String toString() {
 		return name;

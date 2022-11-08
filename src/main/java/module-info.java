@@ -12,6 +12,8 @@ module com.example.proyectoud1gaelismael {
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.dataformat.xml;
+    requires mysql.connector.j;
+    requires java.sql;
 
     opens com.example.proyectoud2gaelismaelmain to javafx.fxml;
     exports com.example.proyectoud2gaelismaelmain;

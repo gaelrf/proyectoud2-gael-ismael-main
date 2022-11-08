@@ -3,17 +3,19 @@ package com.example.proyectoud2gaelismaelmain.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-public class Driver implements Serializable {
+//Implementamos Serializable para exportar el archivo bin
+public class Conductor implements Serializable {
 
 	@JsonProperty("code")
 	private String code;
 
 	@JsonProperty("driverId")
-	private String driverId;
+	private int driverId;
 
 	@JsonProperty("permanentNumber")
-	private String permanentNumber;
+	private int permanentNumber;
 
 	@JsonProperty("nationality")
 	private String nationality;
@@ -25,7 +27,7 @@ public class Driver implements Serializable {
 	private String familyName;
 
 	@JsonProperty("dateOfBirth")
-	private String dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	@JsonProperty("url")
 	private String url;
@@ -34,11 +36,11 @@ public class Driver implements Serializable {
 		return code;
 	}
 
-	public String getDriverId(){
+	public int getDriverId(){
 		return driverId;
 	}
 
-	public String getPermanentNumber(){
+	public int getPermanentNumber(){
 		return permanentNumber;
 	}
 
@@ -54,7 +56,7 @@ public class Driver implements Serializable {
 		return familyName;
 	}
 
-	public String getDateOfBirth(){
+	public LocalDate getDateOfBirth(){
 		return dateOfBirth;
 	}
 
@@ -62,6 +64,18 @@ public class Driver implements Serializable {
 		return url;
 	}
 
+	public Conductor(String code, int driverId, int permanentNumber, String nationality, String givenName, String familyName, LocalDate dateOfBirth, String url) {
+		this.code = code;
+		this.driverId = driverId;
+		this.permanentNumber = permanentNumber;
+		this.nationality = nationality;
+		this.givenName = givenName;
+		this.familyName = familyName;
+		this.dateOfBirth = dateOfBirth;
+		this.url = url;
+	}
+
+	//toString que utilizamos para exportar el fichero txt
 	@Override
 	public String toString() {
 		return givenName + " " + familyName;

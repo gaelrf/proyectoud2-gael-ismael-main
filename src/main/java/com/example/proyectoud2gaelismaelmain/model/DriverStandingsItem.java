@@ -1,30 +1,32 @@
 package com.example.proyectoud2gaelismaelmain.model;
 
-import java.io.Serializable;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+import java.util.List;
+
+//Implementamos Serializable para exportar el archivo bin
 public class DriverStandingsItem implements Serializable {
 
 	@JsonProperty("wins")
-	private String wins;
+	private int wins;
 
 	@JsonProperty("positionText")
 	private String positionText;
 
 	@JsonProperty("Driver")
-	private Driver driver;
+	private Conductor driver;
 
 	@JsonProperty("Constructors")
 	private List<ConstructorsItem> constructors;
 
 	@JsonProperty("position")
-	private String position;
+	private int position;
 
 	@JsonProperty("points")
-	private String points;
+	private float points;
 
-	public String getWins(){
+	public int getWins(){
 		return wins;
 	}
 
@@ -32,7 +34,7 @@ public class DriverStandingsItem implements Serializable {
 		return positionText;
 	}
 
-	public Driver getDriver(){
+	public Conductor getDriver(){
 		return driver;
 	}
 
@@ -40,14 +42,24 @@ public class DriverStandingsItem implements Serializable {
 		return constructors;
 	}
 
-	public String getPosition(){
+	public int getPosition(){
 		return position;
 	}
 
-	public String getPoints(){
+	public float getPoints(){
 		return points;
 	}
 
+	public DriverStandingsItem(int wins, String positionText, Conductor driver, List<ConstructorsItem> constructors, int position, float points) {
+		this.wins = wins;
+		this.positionText = positionText;
+		this.driver = driver;
+		this.constructors = constructors;
+		this.position = position;
+		this.points = points;
+	}
+
+	//toString que utilizamos para exportar el fichero txt
 	@Override
 	public String toString() {
 		return "DriverStandingsItem{" +

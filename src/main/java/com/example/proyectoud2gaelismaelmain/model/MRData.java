@@ -45,6 +45,7 @@ public class MRData{
 		return limit;
 	}
 
+	//Creamos un get para cojer los datos de la tabla
 	public StandingsTable getStandingsTable(){
 		return standingsTable;
 	}

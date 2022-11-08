@@ -18,6 +18,7 @@ public class StandingsListsItem{
 		return round;
 	}
 
+	//Creamos un get para cojer los datos de la tabla
 	public List<DriverStandingsItem> getDriverStandings(){
 		return driverStandings;
 	}

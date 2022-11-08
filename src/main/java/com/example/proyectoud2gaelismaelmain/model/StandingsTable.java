@@ -11,6 +11,7 @@ public class StandingsTable{
 	@JsonProperty("season")
 	private String season;
 
+	//Creamos un get para cojer los datos de la tabla
 	public List<StandingsListsItem> getStandingsLists(){
 		return standingsLists;
 	}
