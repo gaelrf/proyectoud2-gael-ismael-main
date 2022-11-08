@@ -53,29 +53,35 @@ public class StandingsController implements Initializable {
         tabla.getItems().clear();
         ArrayList<DriverStandingsItem> lista = new ArrayList<>();
         try {
-
+            // Intentar buscar el driver de mysql
             Class.forName("com.mysql.cj.jdbc.Driver");
+            //Creacion de conexion a la base de datos
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/f1db","root","abc123.");
+            //Creacion de statement para poder ejecutar consultas
             Statement statement = connection.createStatement();
+            //ejecuto una query //devuelve un resultset almacena datos
             ResultSet resultSet = statement.executeQuery("select * from driverstandings as ds join drivers as d on d.driverId = ds.driverId\n" +
                     "\twhere raceId = (select max(raceId) from races where year = "+anos.getValue()+")\n" +
                     "    order by ds.position");
+
+
             while (resultSet.next()){
 
                 ArrayList<ConstructorsItem> constructors = new ArrayList<>();
                 Statement statement1 = connection.createStatement();
+                // saca constructor del piloto
                 ResultSet resultSet1 = statement1.executeQuery("select distinct c.* from results as r join constructors as c on r.constructorId = c.constructorId\n" +
                         "\twhere\n" +
                         "\t\tr.driverId = "+resultSet.getInt("driverID")+" and\n" +
                         "        r.raceId in (select raceId from races where year = "+anos.getValue()+");\n");
 
                 while (resultSet1.next()){
-
+                    // recorro los controctores y agrego ala lista de constructores
                     ConstructorsItem constructorsItem = new ConstructorsItem(resultSet1.getString("nationality"),resultSet1.getString("name"),resultSet1.getInt("constructorId"),resultSet1.getString("url"));
                     constructors.add(constructorsItem);
 
                 }
-
+                //crea conductor y un standingitem  y agrega ala tabla de javafx
                 Conductor driver = new Conductor(resultSet.getString("code"),resultSet.getInt("driverId"),resultSet.getInt("number"),resultSet.getString("nationality"),resultSet.getString("forename"),resultSet.getString("surname"),resultSet.getDate("dob").toLocalDate(),resultSet.getString("url"));
                 DriverStandingsItem standingsItem = new DriverStandingsItem(resultSet.getInt("wins"),resultSet.getString("positionText"),driver,constructors,resultSet.getInt("position"),resultSet.getFloat("points"));
                 tabla.getItems().add(standingsItem);
