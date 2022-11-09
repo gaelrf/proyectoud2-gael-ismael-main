@@ -53,13 +53,13 @@ public class StandingsController implements Initializable {
         tabla.getItems().clear();
         ArrayList<DriverStandingsItem> lista = new ArrayList<>();
         try {
-            // Intentar buscar el driver de mysql
+            // Intentamos buscar el driver de mysql
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //Creacion de conexion a la base de datos
+            //Creamos la conexion a la base de datos
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/f1db","root","abc123.");
-            //Creacion de statement para poder ejecutar consultas
+            //Creamos un Statement para poder ejecutar consultas
             Statement statement = connection.createStatement();
-            //ejecuto una query //devuelve un resultset almacena datos
+            //Ejecutamos una query que devuelve un resultSet que almacena datos
             ResultSet resultSet = statement.executeQuery("select * from driverstandings as ds join drivers as d on d.driverId = ds.driverId\n" +
                     "\twhere raceId = (select max(raceId) from races where year = "+anos.getValue()+")\n" +
                     "    order by ds.position");
@@ -69,25 +69,25 @@ public class StandingsController implements Initializable {
 
                 ArrayList<ConstructorsItem> constructors = new ArrayList<>();
                 Statement statement1 = connection.createStatement();
-                // saca constructor del piloto
+                // Devolvemos constructor del piloto
                 ResultSet resultSet1 = statement1.executeQuery("select distinct c.* from results as r join constructors as c on r.constructorId = c.constructorId\n" +
                         "\twhere\n" +
                         "\t\tr.driverId = "+resultSet.getInt("driverID")+" and\n" +
                         "        r.raceId in (select raceId from races where year = "+anos.getValue()+");\n");
 
                 while (resultSet1.next()){
-                    // recorro los controctores y agrego ala lista de constructores
+                    // Recorremos los constructores y los agregamos a la lista ConstructorsItem
                     ConstructorsItem constructorsItem = new ConstructorsItem(resultSet1.getString("nationality"),resultSet1.getString("name"),resultSet1.getInt("constructorId"),resultSet1.getString("url"));
                     constructors.add(constructorsItem);
 
                 }
-                //crea conductor y un standingitem  y agrega ala tabla de javafx
+                //Creamos un conductor y un StandingsItem y los agregamos a la tabla de javafx
                 Conductor driver = new Conductor(resultSet.getString("code"),resultSet.getInt("driverId"),resultSet.getInt("number"),resultSet.getString("nationality"),resultSet.getString("forename"),resultSet.getString("surname"),resultSet.getDate("dob").toLocalDate(),resultSet.getString("url"));
                 DriverStandingsItem standingsItem = new DriverStandingsItem(resultSet.getInt("wins"),resultSet.getString("positionText"),driver,constructors,resultSet.getInt("position"),resultSet.getFloat("points"));
                 tabla.getItems().add(standingsItem);
 
             }
-
+            //Cerramos la conexión
             connection.close();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -112,7 +112,7 @@ public class StandingsController implements Initializable {
     }
 
     public void exportarJSON(ActionEvent actionEvent) {
-        //Exportamos la informacion de la tabla a un fichero json por medio de un ObjectMapper de forma ya formateada
+        //Exportamos la información de la tabla a un fichero json por medio de un ObjectMapper de forma ya formateada
         stringNombreFichero = nombreFichero.getText();
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<DriverStandingsItem> exportars = new ArrayList<>();
@@ -126,60 +126,6 @@ public class StandingsController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    public void exportarXML(ActionEvent actionEvent) {
-
-        //Exportamos la informacion de la tabla a un fichero xml por medio de un XmlMapper de forma ya formateada
-        stringNombreFichero = nombreFichero.getText();
-        XmlMapper xmlMapper = new XmlMapper();
-        ArrayList<DriverStandingsItem> exportars = new ArrayList<>();
-        for (DriverStandingsItem exportar : tabla.getItems()){
-
-            exportars.add(exportar);
-
-        }
-        try {
-            xmlMapper.writeValue(new File(stringNombreFichero + ".xml"),exportars);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void exportarTexto(ActionEvent actionEvent) {
-
-        //Exportamos la informacion de la tabla a un fichero txt en formato toString por medio de un FileWriter
-        stringNombreFichero = nombreFichero.getText();
-
-        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(stringNombreFichero + ".txt"));) {
-
-            for (DriverStandingsItem exportar : tabla.getItems()) {
-                escritor.write(String.valueOf(exportar));
-                escritor.newLine();
-            }
-            System.out.println("Escritura realizada.");
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-
-
-    }
-
-    public void exportarBinario(ActionEvent actionEvent) {
-
-        //Exportamos la informacion de la tabla a un fichero bin por medio de un FileOutputStream e implementando las clases con Serializable
-        stringNombreFichero = nombreFichero.getText();
-
-        try (ObjectOutputStream escritor = new ObjectOutputStream(new FileOutputStream(stringNombreFichero + ".bin"));) {
-            for (DriverStandingsItem exportar : tabla.getItems()) {
-                escritor.writeObject(exportar);
-            }
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-
 
     }
 }

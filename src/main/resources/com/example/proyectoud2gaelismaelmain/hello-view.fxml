@@ -51,10 +51,7 @@
     <HBox prefHeight="100.0" prefWidth="200.0" spacing="10">
         <Label prefHeight="17.0" prefWidth="300.0" text="Introduzca el nombre del fichero al que exportar: "/>
         <TextField fx:id="nombreFichero" text="standings"/>
-        <Button fx:id="json" onAction="#exportarJSON" text="Json"/>
-        <Button fx:id="xml" onAction="#exportarXML" text="XML"/>
-        <Button fx:id="texto" onAction="#exportarTexto" text="Texto"/>
-        <Button fx:id="binario" onAction="#exportarBinario" text="Binario"/>
+        <Button fx:id="json" onAction="#exportarJSON" text="Exportar a JSON"/>
     </HBox>
 
 </VBox>
